@@ -5,9 +5,6 @@ import requests
 from operator import itemgetter
 import time
 
-import logging
-logging.getLogger('pika').setLevel(logging.DEBUG)
-
 class InceptionClient(object):
 
     def __init__(self):
@@ -71,7 +68,6 @@ class InceptionClient(object):
         if auth_response.ok:
             
             # some defaults
-            # [TODO]
             # since the api does not always return the serviceCatalog in the exact same order,
             # find the list index for cloudServersOpenStack
             # thanks Jordan!  Could also use list comprehension to find the value
@@ -94,11 +90,6 @@ class InceptionClient(object):
                     else:
                         self.endpoints[key][key1]=auth_response.json()['access']['serviceCatalog'][find_index]['endpoints'][0]['publicURL']
   
-  #          if self.auth_default_dc =='ORD':
-  #              self.auth_server_url=auth_response.json['access']['serviceCatalog'][servers_index]['endpoints'][1]['publicURL']
-  #          else:
-  #              self.auth_server_url=auth_response.json['access']['serviceCatalog'][servers_index]['endpoints'][0]['publicURL']
-
             self.access['ddi']=auth_response_json['access']['token']['tenant']['id']
             self.access['token']=auth_response_json['access']['token']['id']
             self.access['token_expires']=auth_response_json['access']['token']['expires']
@@ -200,7 +191,7 @@ if auth:
             else:
                 print "    [x] Server delete api called returned: %s" % (delete_server,)
         
-        if monitor =='ACTIVE':
+        if monitor_response =='ACTIVE':
             print """
             Server has been built.  Here's the info.
             adminPass : %s

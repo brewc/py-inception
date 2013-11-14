@@ -3,8 +3,6 @@ import requests
 import json
 import re
 from operator import itemgetter
-import logging
-logging.getLogger('pika').setLevel(logging.DEBUG)
 
 def do_rq_connect(host, port, queue):
 
